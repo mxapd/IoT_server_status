@@ -33,6 +33,8 @@ devices = {
     }
 }
 
+UPDATE_INTERVAL = 30
+
 
 for device in devices.values():
     for color in ["red", "green", "yellow"]:
@@ -108,4 +110,4 @@ while True:
         devices["server_web"]["green"].value(0)
         devices["server_web"]["red"].value(1)
 
-    time.sleep(60)
+    time.sleep(UPDATE_INTERVAL)
