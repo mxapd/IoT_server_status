@@ -1,46 +1,26 @@
-from machine import Pin, idle
+from machine import Pin
 import time
-import subprocess
-import network
 from secrets import WIFI_SSID, WIFI_PASSWORD
-
-
-def connect_wifi(ssid, key):
-    nets = network.wlan.scan()
-    for net in nets:
-        if net.ssid == ssid:
-            print('Network found!')
-            network.wlan.connect(net.ssid, auth=(net.sec, key), timeout=5000)
-
-            while not network.wlan.isconnected():
-                idle()  # save power while waiting
-
-            print('WLAN connection succeeded!')
-            break
-
-
-# tries to ping an ip address
-# returns 0 if it gets a response otherwise returns 1
-def ping(host):
-    command = ['ping', '-c', '1', host]
-    result = subprocess.run(command, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE, text=True)
-    if result.returncode == 0:
-        print(f"{host} reachable: {result.stdout}")
-        return 0
-    else:
-        print(f"Cannot reach {host}: {result.stderr}")
-        return 1
+from lib import connect_wifi
 
 
 red = Pin(2, Pin.OUT)
 green = Pin(3, Pin.OUT)
 yellow = Pin(4, Pin.OUT)
 
-connect_wifi(WIFI_PASSWORD, WIFI_PASSWORD)
+yellow.value(0)
+red.value(0)
+green.value(0)
 
-ping('192.168.1.251')
-
+if connect_wifi(WIFI_SSID, WIFI_PASSWORD) == 0:
+    green.value(1)
+    time.sleep(2)
+    green.value(0)
+else:
+    red.value(1)
+    time.sleep(2)
+    red.value(0)
+    raise RuntimeError("Failed to establish network connection")
 
 #i = 0
 
