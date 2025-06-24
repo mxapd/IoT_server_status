@@ -1,5 +1,6 @@
 import network
 import time
+import socket
 
 
 def connect_wifi(ssid, key):
@@ -25,3 +26,16 @@ def connect_wifi(ssid, key):
         network_info = wlan.ifconfig()
         print('IP address:', network_info[0])
         return 0
+
+
+def check_host(host, port=80, timeout=3):
+    try:
+        sock = socket.socket()
+        sock.settimeout(timeout)
+        sock.connect((host, port))
+        sock.close()
+        print(f"{host} is reachable")
+        return True
+    except Exception as e:
+        print(f"Cannot reach {host}: {e}")
+        return False

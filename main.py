@@ -1,7 +1,7 @@
 from machine import Pin
 import time
 from secrets import WIFI_SSID, WIFI_PASSWORD
-from lib import connect_wifi
+from lib import connect_wifi, check_host
 
 
 red = Pin(2, Pin.OUT)
@@ -21,6 +21,21 @@ else:
     time.sleep(2)
     red.value(0)
     raise RuntimeError("Failed to establish network connection")
+
+while True:
+    host_ip = "192.168.1.251"
+    port = 80
+
+    if check_host(host_ip, 80):
+        print(f"Host: {host_ip} is up")
+        red.value(0)
+        green.value(1)
+    else:
+        green.value(0)
+        red.value(1)
+        print(f"Host: {host_ip} is down or unreachable.")
+
+    time.sleep(60)
 
 #i = 0
 
