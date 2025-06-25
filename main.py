@@ -1,8 +1,9 @@
 from machine import Pin
 import time
 from secrets import WIFI_SSID, WIFI_PASSWORD
-from lib import connect_wifi, check_host
+from lib import connect_wifi, check_host, read_temp
 
+UPDATE_INTERVAL = 30
 
 devices = {
     "server": {
@@ -33,8 +34,6 @@ devices = {
     }
 }
 
-UPDATE_INTERVAL = 30
-
 
 for device in devices.values():
     for color in ["red", "green", "yellow"]:
@@ -56,6 +55,9 @@ else:
     raise RuntimeError("Failed to establish network connection")
 
 while True:
+    temperature = read_temp()
+    print(f"temp: {temperature:.2f} C")
+
     # general check for if server is up
     server_up = False
 
