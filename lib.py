@@ -35,7 +35,7 @@ def connect_wifi(ssid, key):
         print('Connection successful!')
         network_info = wlan.ifconfig()
         print('IP address:', network_info[0])
-        return 0
+        return network_info
 
 
 def check_host(host, port=22, timeout=5):
