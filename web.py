@@ -1,5 +1,5 @@
 import socket as Socket
-
+import json
 socket = None
 
 
@@ -23,16 +23,33 @@ def check_listener():
     if "\r\n\r\n" in request:
         request_data = request.split('\r\n\r\n')[1]
         print(f"Extracted data:\n{request_data}")
-    # send reply
+
+        json_data = json.loads(request_data)
+
+        device = json_data.get("device")
+        notify_level = json_data.get("notify")
+
+        response = (
+            "HTTP/1.1 200 OK\r\n"
+            "Content-Type: text/plain\r\n"
+            "Connection: close\r\n"
+            "\r\n"
+            "POST received and parsed successfully"
+        )
+
+        connection.send(response.encode())
+        connection.close()
+
+        return (device, notify_level)
 
     response = (
-        "HTTP/1.1 200 OK\r\n"
+        "HTTP/1.1 400 Bad Request\r\n"
         "Content-Type: text/plain\r\n"
         "Connection: close\r\n"
         "\r\n"
-        "POST received"
+        "POST received but failed to parse"
     )
 
     connection.send(response.encode())
     connection.close()
-    return request_data
+    return ("unknown", "none")
