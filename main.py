@@ -1,10 +1,10 @@
 from machine import Pin
 from secrets import WIFI_SSID, WIFI_PASSWORD
-from lib import connect_wifi, check_host, read_temp, initialize_lights_off
+from lib import connect_wifi, check_host, read_temp, initialize_lights_off, is_host_up
 from web import init_listener, check_listener_async
 import uasyncio
 
-UPDATE_INTERVAL = 5
+UPDATE_INTERVAL = 30
 
 devices = {
     "server": {
@@ -40,8 +40,11 @@ notification_states = {}
 
 initialize_lights_off(devices)
 
+listener_initialized = False
+
 
 async def main():
+    global listener_initialized
     connect_result = connect_wifi(WIFI_SSID, WIFI_PASSWORD)
 
     if connect_result != 1:
@@ -59,7 +62,9 @@ async def main():
             await uasyncio.sleep(0.5)
         raise RuntimeError("Failed to establish network connection")
 
-    init_listener(ip_addr, 80)
+    if not listener_initialized:
+        init_listener(ip_addr, 80)
+        listener_initialized = True
 
     monitor_task = uasyncio.create_task(monitor_hosts())
     request_task = uasyncio.create_task(handle_request())

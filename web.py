@@ -47,7 +47,7 @@ async def check_listener_async():
                         return ("unknown", "none")
                 else: 
                     print("No data ready")
-                    connectin.close()
+                    connection.close()
                     return ("unknown", "none")
 
                 if "\r\n\r\n" in request:
