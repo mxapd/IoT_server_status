@@ -1,10 +1,11 @@
 from machine import Pin
 from secrets import WIFI_SSID, WIFI_PASSWORD
-from lib import connect_wifi, check_host, read_temp, initialize_lights_off, is_host_up
+from lib import connect_wifi, check_host, read_temp, initialize_lights_off
 from web import init_listener, check_listener_async
 import uasyncio
+import time
 
-UPDATE_INTERVAL = 30
+UPDATE_INTERVAL = 60
 
 devices = {
     "server": {
@@ -40,32 +41,27 @@ notification_states = {}
 
 initialize_lights_off(devices)
 
-listener_initialized = False
+connect_result = connect_wifi(WIFI_SSID, WIFI_PASSWORD)
+
+if connect_result != 1:
+    for _ in range(3):
+        devices["server"]["green"].value(1)
+        time.sleep(0.5)
+        devices["server"]["green"].value(0)
+        time.sleep(0.5)
+    ip_addr = str(connect_result[0])
+else:
+    for _ in range(3):
+        devices["server"]["red"].value(1)
+        time.sleep(0.5)
+        devices["server"]["red"].value(0)
+        time.sleep(0.5)
+        raise RuntimeError("Failed to establish network connection")
+
+init_listener(ip_addr, 80)
 
 
 async def main():
-    global listener_initialized
-    connect_result = connect_wifi(WIFI_SSID, WIFI_PASSWORD)
-
-    if connect_result != 1:
-        for _ in range(3):
-            devices["server"]["green"].value(1)
-            await uasyncio.sleep(0.5)
-            devices["server"]["green"].value(0)
-            await uasyncio.sleep(0.5)
-        ip_addr = str(connect_result[0])
-    else:
-        for _ in range(3):
-            devices["server"]["red"].value(1)
-            await uasyncio.sleep(0.5)
-            devices["server"]["red"].value(0)
-            await uasyncio.sleep(0.5)
-        raise RuntimeError("Failed to establish network connection")
-
-    if not listener_initialized:
-        init_listener(ip_addr, 80)
-        listener_initialized = True
-
     monitor_task = uasyncio.create_task(monitor_hosts())
     request_task = uasyncio.create_task(handle_request())
 
