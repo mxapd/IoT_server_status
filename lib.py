@@ -49,3 +49,11 @@ def check_host(host, port=22, timeout=2):
     except Exception as e:
         print(f"Cannot reach {host} Error: {e}")
         return False
+
+
+# INITIALIZE ALL LIGTS OFF
+def initialize_lights_off(devices):
+    for device in devices.values():
+        for color in ["red", "green", "yellow"]:
+            if color in device:
+                device[color].value(0)
