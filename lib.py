@@ -38,7 +38,7 @@ def connect_wifi(ssid, key):
         return network_info
 
 
-def check_host(host, port=22, timeout=5):
+def check_host(host, port=22, timeout=2):
     try:
         sock = socket.socket()
         sock.settimeout(timeout)

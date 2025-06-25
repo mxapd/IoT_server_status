@@ -2,7 +2,7 @@ from machine import Pin
 import time
 from secrets import WIFI_SSID, WIFI_PASSWORD
 from lib import connect_wifi, check_host, read_temp
-from web import start_listening
+from web import init_listener, check_listener
 
 UPDATE_INTERVAL = 30
 
@@ -59,7 +59,7 @@ else:
     raise RuntimeError("Failed to establish network connection")
 
 
-start_listening(ip_addr, 80)
+init_listener(ip_addr, 80)
 
 
 while True:
@@ -119,5 +119,9 @@ while True:
 
         devices["server_web"]["green"].value(0)
         devices["server_web"]["red"].value(1)
+
+    if check_listener() == "Notify":
+        devices["pc"]["yellow"].value(1)
+        devices["server"]["yellow"].value(1)
 
     time.sleep(UPDATE_INTERVAL)
