@@ -4,7 +4,7 @@ from secrets import WIFI_SSID, WIFI_PASSWORD
 from lib import connect_wifi, check_host, read_temp
 from web import init_listener, check_listener
 
-UPDATE_INTERVAL = 10
+UPDATE_INTERVAL = 0
 
 devices = {
     "server": {
@@ -73,8 +73,6 @@ while True:
         if check_host(devices["server"]["ip"], port):
             server_up = True
             break
-        else:
-            server_up = False
 
     # check for if pc is up
     if check_host(devices["pc"]["ip"], devices["pc"]["ports"][0]):
@@ -130,7 +128,25 @@ while True:
         if device_name in devices and "yellow" in devices[device_name]:
             print(f"Notification received - Level: {notify_level}, From: {device_name}")
 
-            devices[device_name]["yellow"].value(1)
+            if notify_level == "info":
+                devices[device_name]["yellow"].value(1)
+
+            elif notify_level == "warning":
+                for _ in range(4):
+                    devices[device_name]["yellow"].value(1)
+                    time.sleep(1)
+                    devices[device_name]["yellow"].value(0)
+                    time.sleep(1)
+
+            elif notify_level == "critical":
+                for _ in range(4):
+                    for _ in range(3):
+                        devices[device_name]["yellow"].value(1)
+                        time.sleep(0.2)
+                        devices[device_name]["yellow"].value(0)
+                        time.sleep(0.2)
+                    time.sleep(1)
+
         elif device_name not in devices:
             print(f"No such device: {device_name}")
 
