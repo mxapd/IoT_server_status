@@ -7,6 +7,13 @@ import time
 
 UPDATE_INTERVAL = 60
 
+NOTIFICATION_PRIORITIES = {
+    "none": 0,
+    "info": 1,
+    "warning": 2,
+    "critical": 3
+}
+
 devices = {
     "server": {
         "red": Pin(2, Pin.OUT),
@@ -38,6 +45,7 @@ devices = {
 
 notification_tasks = {}
 notification_states = {}
+device_priority_levels = {}
 
 initialize_lights_off(devices)
 
@@ -151,7 +159,15 @@ async def critical_blink(pin):
 
 
 async def handle_notification(device_name, notify_level):
-    global notification_tasks, notification_states
+    global notification_tasks, notification_states, device_priority_levels
+
+    current_priority = device_priority_levels.get(device_name)
+    new_priority = NOTIFICATION_PRIORITIES.get(notify_level)
+    print(f"current: {current_priority}")
+    print(f"new: {new_priority}")
+
+    device_priority_levels[device_name] = new_priority
+    notification_states[device_name] = notify_level
 
     if device_name in notification_tasks:
         notification_tasks[device_name].cancel()
