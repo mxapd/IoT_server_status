@@ -4,6 +4,7 @@ import uasyncio
 import select
 
 socket = None
+current_temperature = 0.0
 
 
 def init_listener(ip_addr, port):
@@ -14,6 +15,41 @@ def init_listener(ip_addr, port):
     socket.bind(address)
     socket.listen()
     print(f"Socket bound and listening on {address[0]}:{address[1]} and listening")
+
+
+def update_temperature(temp):
+    global current_temperature
+    current_temperature = temp
+
+
+def handle_get_request(request):
+    global current_temperature
+
+    request = request.split('\r\n')
+
+    if request:
+        request_parts = request[0].split(' ')
+
+        method = request_parts[0]
+        path = request_parts[1]
+
+        if method == "GET":
+            if path == "/temp" or "/temperature":
+                temp_data = {
+                    "temperature": current_temperature,
+                    "unit": "celsius"
+                }
+
+                response_body = json.dumps(temp_data)
+
+                response = (
+                    "HTTP/1.1 200 OK\r\n"
+                    "Content-Type: application/json\r\n"
+                    "\r\n"
+                    "{}"
+                ).format(response_body)
+
+                return response
 
 
 async def check_listener_async():
@@ -40,7 +76,7 @@ async def check_listener_async():
                 if ready_to_read:
                     try: 
                         request = connection.recv(1024).decode()
-                        print(f"Raw request:\n {request}")
+                        print(f"Raw request:\n{request}")
                     except Exception as e:
                         print(f"recv failed: {e}")
                         connection.close()
@@ -50,7 +86,13 @@ async def check_listener_async():
                     connection.close()
                     return ("unknown", "none")
 
-                if "\r\n\r\n" in request:
+                if request.startswith("GET"):
+                    response = handle_get_request(request)
+                    connection.send(response.encode())
+                    connection.close()
+                    return ("get_request", "none")
+
+                elif "\r\n\r\n" in request:
                     request_data = request.split('\r\n\r\n')[1]
                     print(f"Extracted data:\n{request_data}")
 
@@ -88,6 +130,12 @@ def check_listener():
     request = connection.recv(1024).decode()
 
     print(f"Raw request:\n {request}")
+
+    if request.startswith("GET"):
+        response = handle_get_request(request)
+        connection.send(response.encode())
+        connection.close()
+        return ("get_request", "none")
 
     if "\r\n\r\n" in request:
         request_data = request.split('\r\n\r\n')[1]

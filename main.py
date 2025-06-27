@@ -1,7 +1,7 @@
 from machine import Pin
 from secrets import WIFI_SSID, WIFI_PASSWORD
 from lib import connect_wifi, check_host, read_temp, initialize_lights_off
-from web import init_listener, check_listener_async
+from web import init_listener, check_listener_async, update_temperature
 import uasyncio
 import time
 
@@ -72,6 +72,8 @@ async def monitor_hosts():
     while True:
         temperature = read_temp()
         print(f"temp: {temperature:.2f} C")
+        update_temperature(temperature)
+
 
         # general check for if server is up
         server_up = False
@@ -186,6 +188,10 @@ async def handle_request():
     while True:
         try:
             listener_result = await check_listener_async()
+
+            if listener_result[0] == "get_request":
+                await uasyncio.sleep(0.01)
+                continue
 
             if listener_result[1] in ["info", "warning", "critical"]:
 
