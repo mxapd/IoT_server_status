@@ -34,7 +34,7 @@ def handle_get_request(request):
         path = request_parts[1]
 
         if method == "GET":
-            if path == "/temp" or "/temperature":
+            if path == "/temp" or path == "/temperature":
                 temp_data = {
                     "temperature": current_temperature,
                     "unit": "celsius"
