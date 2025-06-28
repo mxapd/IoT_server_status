@@ -48,17 +48,59 @@ The system provides insights into:
 | Breadboard | Wiring Platform | 840 connection points | Electrokit |
 | Jumper wires | Connections | Male-to-male, various colors | Electrokit |
 | USB Cable | Programming/Power | Micro-USB to USB-A | Electrokit |
-| MCP9700 TO-92 Temperaturgivare | Read the temprerature | 2.3-5.5VDC | Electrokit |
+| MCP9700 TO-92 Temperature Sensor | Read the temprerature | 2.3-5.5VDC | Electrokit |
 
 **Total Cost: 349kr** + shipping (for the start kit bundle)
 
 ### Component Details
 
+**Raspberry Pi Pico W:** The heart of the system, chosen for its built-in WiFi capability, sufficient GPIO pins for multiple LEDs, and native MicroPython support. 
+
+**LEDs:** Standard 3mm LEDs provide clear visual indication. Colors chosen follow common conventions:
+- Red: Device/service down or error state
+- Green: Device/service operational
+- Yellow: Warning/notification state
+
+**Resistors:** 1000Ω resistors limit current to safe levels for LEDs, ensuring longevity and preventing damage.
+
+**Temperature Sensor**: Reads the ambient temperature.
+
 ## Computer Setup
 
 ### Development Environment
 
+My development environment is centered around **Neovim**. I use it as my main editor alongside a Python LSP for code intelligence.
+
+When working with MicroPython, I don’t use any special plugins—just the standard Python LSP. To interface with the Raspberry Pi Pico, I use **mpremote**, a terminal tool that makes it easy to upload files and access the Pico REPL.
+
+For managing project-specific dependencies like mpremote or python3, I use nix-shell. Each project includes a shell.nix file that declares the necessary packages. When I run nix-shell, the required tools are installed in a temporary isolated environment. This ensures that all dependencies are tied directly to the project, making it easy to get started—just enter the development shell and everything is ready to go.
+
+If you're curious, you can explore my full setup here: github.com/mxapd/nix.
+
 ### Installation Steps
+
+#### IDE and development environment
+Installing and configuring neovim is not something i want to go into here since it goes outside the scope for this report. All my configuration files can be found in my nix repo above. 
+
+To install python and mpremote i use a nix-shell as mentioned, to follow along with that method all you need to do is copy that file, put it in your project directory and run ``bash
+nix-shell 
+``. (OBS requires you to be on nixos or have the nix package manager, if you dont want to do that just install in some other way) 
+
+While in the development shell python and mpremote are availible to use. 
+
+#### Setting up Pico for MicroPython
+
+Next is setting up and preparing the pico for programming with micropython.  
+
+1. Download the firmware from https://micropython.org/download/RPI_PICO_W/
+2. Plug in your microUSB cable into the pico and then hold BOOTSEL while plugging it in to a computer.
+3. Copy the .uf2 file into the mass storage device that appears. The pico will now install the firmware and automaticly reset, after which it is ready for use.
+
+Now to upload code all we need to do is use mpremote, the exact command to copy files is ``bash
+mpremote connect auto fs cp <filename> : # copy files to pico
+mpremote connect auto repl # connect to the repl to run commands
+``
+If it doesnt work try with sudo.
 
 ## Putting Everything Together
 
