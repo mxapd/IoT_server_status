@@ -96,7 +96,7 @@ Next is setting up and preparing the pico for programming with micropython.
 2. Plug in your microUSB cable into the pico and then hold BOOTSEL while plugging it in to a computer.
 3. Copy the .uf2 file into the mass storage device that appears. The pico will now install the firmware and automaticly reset, after which it is ready for use.
 
-Now to upload code all we need to do is use mpremote, the exact command to copy files is ``bash
+Now to upload code all we need to do is use mpremote, the exact command to copy files is ```bash
 mpremote connect auto fs cp <filename> : # copy files to pico
 mpremote connect auto repl # connect to the repl to run commands
 ``
@@ -105,6 +105,21 @@ If it doesnt work try with sudo.
 ## Putting Everything Together
 
 ### Circuit Design
+
+```
+Pico W GPIO Layout:
+├── Pin 2  → 1000Ω → Red LED   (Server status)
+├── Pin 3  → 1000Ω → Green LED (Server status)  
+├── Pin 4  → 1000Ω → Yellow LED (Server notifications)
+├── Pin 6  → 1000Ω → Red LED   (PC status)
+├── Pin 7  → 1000Ω → Green LED (PC status)
+├── Pin 8  → 1000Ω → Yellow LED (PC notifications)
+├── Pin 10 → 1000Ω → Green LED (Jellyfin service)
+├── Pin 11 → 1000Ω → Red LED   (Jellyfin service)
+├── Pin 14 → 1000Ω → Green LED (Web service)
+├── Pin 15 → 1000Ω → Red LED   (Web service)
+└── GND    → Common ground for all LEDs
+```
 
 ### Electrical Calculations
 
