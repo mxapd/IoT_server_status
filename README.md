@@ -82,7 +82,7 @@ If you're curious, you can explore my full setup here: https://github.com/mxapd/
 #### IDE and development environment
 Installing and configuring neovim is not something i want to go into here since it goes outside the scope for this report. All my configuration files can be found in my nix repo above. 
 
-To install python and mpremote i use a nix-shell as mentioned, to follow along with that method all you need to do is copy that file, put it in your project directory and run $ nix-shell. 
+To install python and mpremote i use a nix-shell as mentioned, to follow along with that method all you need to do is copy that file, put it in your project directory and run `$ nix-shell`. 
 
 (OBS requires you to be on nixos or have the nix package manager, if you dont want to do that just install in some other way) 
 
@@ -96,9 +96,10 @@ Next is setting up and preparing the pico for programming with micropython.
 2. Plug in your microUSB cable into the pico and then hold BOOTSEL while plugging it in to a computer.
 3. Copy the .uf2 file into the mass storage device that appears. The pico will now install the firmware and automaticly reset, after which it is ready for use.
 
-Now to upload code all we need to do is use mpremote, the exact command to copy files is ``=bash
-mpremote connect auto fs cp <filename> : # copy files to pico
-mpremote connect auto repl # connect to the repl to run commands
+Now to upload code all we need to do is use mpremote, the exact command to copy files is 
+``
+$ mpremote connect auto fs cp <filename> : # copy files to pico
+$ mpremote connect auto repl # connect to the repl to run commands
 ``
 If it doesnt work try with sudo.
 
