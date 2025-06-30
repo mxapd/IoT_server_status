@@ -2,7 +2,6 @@
 
 **Author:** Max Porseryd (mp224hv)  
 **Course:** 1DT305 - Introduction to Applied Internet of Things  
-
 **Date:** June 2025
 
 ## Project Overview
