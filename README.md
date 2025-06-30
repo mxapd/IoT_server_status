@@ -96,12 +96,13 @@ Next is setting up and preparing the pico for programming with micropython.
 2. Plug in your microUSB cable into the pico and then hold BOOTSEL while plugging it in to a computer.
 3. Copy the .uf2 file into the mass storage device that appears. The pico will now install the firmware and automaticly reset, after which it is ready for use.
 
-Now to upload code all we need to do is use mpremote, the exact command to copy files is 
+Now to upload code all we need to do is use mpremote, the exact command to copy files is:
 ``
-$ mpremote connect auto fs cp <filename> : # copy files to pico
-$ mpremote connect auto repl # connect to the repl to run commands
+$ sudo mpremote connect auto fs cp <filename> : # copy files to pico
 ``
-If it doesnt work try with sudo.
+``
+$ sudo mpremote connect auto repl # connect to the repl to run commands
+``
 
 ## Putting Everything Together
 
