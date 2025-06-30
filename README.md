@@ -108,24 +108,45 @@ $ sudo mpremote connect auto repl # connect to the repl to run commands
 
 ### Circuit Design
 
+The circuit follows a simple design connecting multiple LEDs to GPIO pins through current-limiting resistors.
+
 ```
 Pico W GPIO Layout:
-├── Pin 2  → 1000Ω → Red LED   (Server status)
-├── Pin 3  → 1000Ω → Green LED (Server status)  
-├── Pin 4  → 1000Ω → Yellow LED (Server notifications)
-├── Pin 6  → 1000Ω → Red LED   (PC status)
-├── Pin 7  → 1000Ω → Green LED (PC status)
-├── Pin 8  → 1000Ω → Yellow LED (PC notifications)
-├── Pin 10 → 1000Ω → Green LED (Jellyfin service)
-├── Pin 11 → 1000Ω → Red LED   (Jellyfin service)
-├── Pin 14 → 1000Ω → Green LED (Web service)
-├── Pin 15 → 1000Ω → Red LED   (Web service)
-└── GND    → Common ground for all LEDs
+├── Pin 3 (GND)     → Common ground for all LEDs and sensors
+├── Pin 4 (GP2)     → 1000Ω → Red LED     (Server status)
+├── Pin 5 (GP3)     → 1000Ω → Green LED   (Server status)  
+├── Pin 6 (GP4)     → 1000Ω → Yellow LED  (Server notifications)
+├── Pin 9 (GP6)     → 1000Ω → Red LED     (PC status)
+├── Pin 10 (GP7)    → 1000Ω → Green LED   (PC status)
+├── Pin 11 (GP8)    → 1000Ω → Yellow LED  (PC notifications)
+├── Pin 14 (GP10)   → 1000Ω → Green LED   (Jellyfin service)
+├── Pin 15 (GP11)   → 1000Ω → Red LED     (Jellyfin service)
+├── Pin 19 (GP14)   → 1000Ω → Green LED   (Web service)
+├── Pin 20 (GP15)   → 1000Ω → Red LED     (Web service)
+├── Pin 31 (ADC0)   → Temp Sensor (middle leg of sensor flat facing)
+└── Pin 36 (3V3OUT) → Temp Sensor (left leg of sensor flat facing)
 ```
 
 ### Electrical Calculations
 
+Equation for the temperature sensor: 
+- Voltage = (ADC reading * 3.3) / 65535
+- Temperature = (Voltage - 0.5) * 100
+
 ## Platform Choice
+
+For this project, i chose not to use a third-party or cloud-based platform. Instead, i developed a fully self-hosted and self-made solution running entirely on the Raspberry Pi Pico W. This decision was driven by my interest in building systems from the ground up and avoiding reliance on external services or subscriptions.
+
+By keeping everything local and self-contained, i ensure full ownership of the system, greater privacy, and no ongoing costs.
+
+Key advantages of this approach:
+- All the monitoring logic runs on the Pico W
+- LEDs respond immediately 
+- Works even if internet goes down
+- No monthly fees or cloud dependencies
+- Simple HTTP API for recieving notifications
+- Could hook into other monitoring tools if I wanted
+- Easy to write scripts that send alerts
 
 ### How I Set Things Up
 
