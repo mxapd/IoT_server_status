@@ -4,6 +4,8 @@
 **Course:** 1DT305 - Introduction to Applied Internet of Things  
 **Date:** 30 June 2025
 
+**Estimated Time**: 2h
+
 ## Project Overview
 
 I built a network monitoring system using a Raspberry Pi Pico W that watches my home network devices and shows their status with colored LEDs. It keeps an eye on my server, PC, and specific services on the server like Jellyfin, then lights up green when everything's working or red when something's down. 
