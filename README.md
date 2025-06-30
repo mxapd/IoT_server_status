@@ -1,7 +1,7 @@
 # Network Device Status and Notification Device 
 
 **Author:** Max Porseryd (mp224hv)  
-**Course:** 1DT305 - Introduction to Applied Internet of Things
+**Course:** 1DT305 - Introduction to Applied Internet of Things 
 **Date:** June 2025
 
 ## Project Overview
@@ -50,7 +50,7 @@ The system provides insights into:
 | USB Cable | Programming/Power | Micro-USB to USB-A | Electrokit |
 | MCP9700 TO-92 Temperature Sensor | Read the temprerature | 2.3-5.5VDC | Electrokit |
 
-**Total Cost: 349kr** + shipping (for the start kit bundle)
+**Total Cost: 349kr** (for the start kit bundle) + shipping 
 
 ### Component Details
 
@@ -71,19 +71,18 @@ The system provides insights into:
 
 My development environment is centered around **Neovim**. I use it as my main editor alongside a Python LSP for code intelligence.
 
-When working with MicroPython, I don’t use any special plugins—just the standard Python LSP. To interface with the Raspberry Pi Pico, I use **mpremote**, a terminal tool that makes it easy to upload files and access the Pico REPL.
+When working with MicroPython, I don’t use any special plugins just a standard Python LSP. To interface with the Raspberry Pi Pico, I use **mpremote**, a terminal tool that makes it easy to upload files and access the Pico REPL.
 
-For managing project-specific dependencies like mpremote or python3, I use nix-shell. Each project includes a shell.nix file that declares the necessary packages. When I run nix-shell, the required tools are installed in a temporary isolated environment. This ensures that all dependencies are tied directly to the project, making it easy to get started—just enter the development shell and everything is ready to go.
+For managing project-specific dependencies like mpremote or python3, I use nix-shell. Each project includes a shell.nix file that declares the necessary packages. When I run nix-shell, the required tools are installed in a temporary isolated environment. This ensures that all dependencies are tied directly to the project, making it easy to get started, just enter the development shell and everything is ready to go.
 
-If you're curious, you can explore my full setup here: github.com/mxapd/nix.
+If you're curious, you can explore my full setup here: https://github.com/mxapd/nix.
 
 ### Installation Steps
 
 #### IDE and development environment
 Installing and configuring neovim is not something i want to go into here since it goes outside the scope for this report. All my configuration files can be found in my nix repo above. 
 
-To install python and mpremote i use a nix-shell as mentioned, to follow along with that method all you need to do is copy that file, put it in your project directory and run ``bash
-nix-shell 
+To install python and mpremote i use a nix-shell as mentioned, to follow along with that method all you need to do is copy that file, put it in your project directory and run ``$ nix-shell 
 ``. (OBS requires you to be on nixos or have the nix package manager, if you dont want to do that just install in some other way) 
 
 While in the development shell python and mpremote are availible to use. 
