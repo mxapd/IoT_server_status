@@ -15,7 +15,7 @@ It hosts an HTTP API, so other systems can send it notifications to trigger diff
 Another feature is a temperature sensor on the pico that reads the room temperature which is retrievable from the HTTP API, this is a bit of a tack on because of the course requirements but it will come in handy as i dont have another temperature sensor anywhere in my appartment. 
 
 
-(the code is quite a mess right now since ive been prototyping pretty rapidly, so some functions are missplaced and are doing more than they should so please have patience going through the code. thanks)
+(the code is quite a mess right now since ive been prototyping rapidly, so some functions are missplaced and are doing more than they should so please have patience going through the code. thanks)
 
 **Estimated completion time:**  
 
