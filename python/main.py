@@ -2,8 +2,10 @@ from secrets import WIFI_SSID, WIFI_PASSWORD
 from webserver import init_listener, update_temperature, handle_request
 from wifi import connect_wifi, check_host
 from hardware import read_temp, initialize_lights_off, devices
+
 import uasyncio
 import time
+import gc 
 
 UPDATE_INTERVAL = 60
 
@@ -96,5 +98,6 @@ async def monitor_hosts():
 
         await uasyncio.sleep(UPDATE_INTERVAL)
 
+        gc.collect()
 
 uasyncio.run(main())
