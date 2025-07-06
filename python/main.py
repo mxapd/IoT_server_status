@@ -97,7 +97,8 @@ async def monitor_hosts():
             devices["server_web"]["red"].value(1)
 
         await uasyncio.sleep(UPDATE_INTERVAL)
-
+        print(f"Free memory: {gc.mem_free()} bytes")
+        print(f"Allocated: {gc.mem_alloc()} bytes")
         gc.collect()
 
 uasyncio.run(main())
