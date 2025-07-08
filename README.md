@@ -27,7 +27,7 @@ The main goals were:
 - Catch problems early - Better to know about issues before they affect what I'm doing
 - Monitor specific services - Not just "is the server on" but "is Jellyfin actually running"
 - Accept external notifications - Other scripts can tell it to flash lights for warnings so i can know if my server is overheating or something else. 
-- Learn - Good excuse to play with async programming and IoT concepts.
+- Learn - Good excuse to learn how to work with microcontrollers and other IoT concepts.
 
 ### Expected Insights
 
