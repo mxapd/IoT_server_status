@@ -14,11 +14,6 @@ It hosts an HTTP API, so other systems can send it notifications to trigger diff
 
 Another feature is a temperature sensor on the pico that reads the room temperature which is retrievable from the HTTP API, this is a bit of a tack on because of the course requirements but it will come in handy as i dont have another temperature sensor anywhere in my appartment. 
 
-
-(the code is quite a mess right now since ive been prototyping rapidly, so some functions are missplaced and are doing more than they should so please have patience going through the code. thanks)
-
-**Estimated completion time:**  
-
 ## Objective
 
 ### Why This Project?
@@ -32,7 +27,7 @@ The main goals were:
 - Catch problems early - Better to know about issues before they affect what I'm doing
 - Monitor specific services - Not just "is the server on" but "is Jellyfin actually running"
 - Accept external notifications - Other scripts can tell it to flash lights for warnings so i can know if my server is overheating or something else. 
-- Learn - Good excuse to play with async programming and IoT concepts.
+- Learn - Good excuse to learn how to work with microcontrollers and other IoT concepts.
 
 ### Expected Insights
 
@@ -194,7 +189,7 @@ def connect_wifi(ssid, key):
 This establishes WiFi connection with a 10-second timeout mechanism. Returns network configuration on success or an error code on failure.
 
 ### Host monitoring
-```python
+
 def check_host(host, port=22, timeout=1):
     try:
         sock = socket.socket()
