@@ -377,7 +377,7 @@ But honestly, just having the LEDs has been surprisingly useful. Sometimes simpl
 ## Final Results (will be added once im fully finished)
 
 
-[[images/IMG_20250708_141524572.jpg]]
+[![device_monitor_device](https://github.com/mxapd/IoT_server_status/blob/main/images/IMG_20250708_141524572.jpg)]
 
 ---
 
