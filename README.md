@@ -376,13 +376,8 @@ But honestly, just having the LEDs has been surprisingly useful. Sometimes simpl
 
 ## Final Results (will be added once im fully finished)
 
-### What Works
 
-### How It Went
-
-### What I Learned
-
-### Other toughts and ideas
+[[images/IMG_20250708_141524572.jpg]]
 
 ---
 
