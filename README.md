@@ -189,7 +189,7 @@ def connect_wifi(ssid, key):
 This establishes WiFi connection with a 10-second timeout mechanism. Returns network configuration on success or an error code on failure.
 
 ### Host monitoring
-```python
+
 def check_host(host, port=22, timeout=1):
     try:
         sock = socket.socket()
