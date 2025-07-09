@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request
 import requests
 from datetime import datetime
 
@@ -34,7 +34,6 @@ def send_notification(device, level):
         payload = {"device": device, "notify": level}
         print(f"Sending payload: {payload}")
 
-        # Convert to JSON string manually to ensure proper formatting
         import json
         json_payload = json.dumps(payload)
         print(f"JSON payload: {json_payload}")
@@ -46,7 +45,7 @@ def send_notification(device, level):
 
         response = requests.post(
             f"http://{PICO_IP}:{PICO_PORT}/",
-            data=json_payload,  # Use data instead of json parameter
+            data=json_payload,
             headers=headers,
             timeout=5
         )
