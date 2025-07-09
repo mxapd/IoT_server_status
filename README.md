@@ -374,15 +374,9 @@ If I wanted to get fancier, I could easily add:
 
 But honestly, just having the LEDs has been surprisingly useful. Sometimes simple is better.
 
-## Final Results (will be added once im fully finished)
+## Final Results
 
-### What Works
-
-### How It Went
-
-### What I Learned
-
-### Other toughts and ideas
+![device_monitor_device](https://github.com/mxapd/IoT_server_status/blob/main/images/IMG_20250708_141524572.jpg)
 
 ---
 
