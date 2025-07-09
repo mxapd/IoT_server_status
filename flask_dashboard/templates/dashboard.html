@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Pico Dashboard (Static)</title>
+    <style>
+    body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 30px; }
+    .card { background: white; border-radius: 10px; padding: 20px; max-width: 600px; margin: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; }
+    .temperature { font-size: 2em; text-align: center; margin: 20px 0; }
+    form { display: flex; flex-direction: column; gap: 10px; }
+    label { font-weight: bold; }
+    select, button { padding: 10px; font-size: 1em; }
+    .message { text-align: center; margin: 15px 0; color: green; }
+    .refresh { text-align: center; margin-top: 20px; }
+    .refresh a { text-decoration: none; color: blue; }
+
+    .device-statuses {
+    margin-top: 30px;
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+    .device-statuses h2 {
+    margin-bottom: 10px;
+    }
+    .device-statuses ul {
+    list-style: none;
+    padding-left: 0;
+    }
+    .device-statuses li {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Pico Dashboard</h1>
+      <div class="temperature">
+	{% if temperature %}
+	Room Temperature: {{ temperature }}°{{ unit[0]|upper }} <br>
+	<small>Last updated: {{ last_update }}</small>
+	{% else %}
+	❌ Temperature Unavailable
+	{% endif %}
+      </div>
+<!--
+      {% if message %}
+      <div class="message">{{ message }}</div>
+      {% endif %}
+
+     <form method="POST">
+	<label for="device">Select Device:</label>
+	<select name="device" required>
+	  <option value="server">Server</option>
+	  <option value="server_jellyfin">Jellyfin</option>
+	  <option value="server_web">Web Server</option>
+	  <option value="pc">PC</option>
+	</select>
+
+	<label for="level">Notification Level:</label>
+	<select name="level" required>
+	  <option value="info">Info</option>
+	  <option value="warning">Warning</option>
+	  <option value="critical">Critical</option>
+	  <option value="none">Clear</option>
+	</select>
+
+	<button type="submit">Send Notification</button>
+      </form>
+--!>
+      
+      <div class="refresh">
+	🔄 <a href="/">Refresh Data</a>
+      </div>
+
+      <div class="device-statuses">
+	<h2>Device Statuses</h2>
+	{% if device_statuses %}
+	<ul>
+	  {% for device, status in device_statuses.items() %}
+	  <li><strong>{{ device.replace('_', ' ').title() }}:</strong>
+	    {% if status == 'up' %}
+	    <span style="color:green;">● Up</span>
+	    {% elif status == 'down' %}
+	    <span style="color:red;">● Down</span>
+	    {% else %}
+	    <span style="color:gray;">● Unknown</span>
+	    {% endif %}
+	  </li>
+	  {% endfor %}
+	</ul>
+	{% else %}
+	<p>No device status information available.</p>
+	{% endif %}
+      </div>
+    </div>
+  </body>
+</html>
