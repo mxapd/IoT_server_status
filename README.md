@@ -1,4 +1,4 @@
-# Network Device Status and Notification Device 
+![image](https://github.com/user-attachments/assets/70bd95cb-3584-42bf-8620-0944b9b9b5b0)# Network Device Status and Notification Device 
 
 **Author:** Max Porseryd (mp224hv)  
 **Course:** 1DT305 - Introduction to Applied Internet of Things  
@@ -125,6 +125,8 @@ Pico W GPIO Layout:
 ├── Pin 31 (ADC0)   → Temp Sensor (middle leg of sensor flat facing)
 └── Pin 36 (3V3OUT) → Temp Sensor (left leg of sensor flat facing)
 ```
+![image](https://github.com/user-attachments/assets/8775fe92-ab12-4e21-891a-960a49d7be74)
+
 
 ### Electrical Calculations
 
