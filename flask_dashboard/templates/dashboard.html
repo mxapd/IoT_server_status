@@ -37,7 +37,7 @@
   </head>
   <body>
     <div class="card">
-      <h1>Pico Dashboard</h1>
+      <h1>HomeLab Status</h1>
       <div class="temperature">
 	{% if temperature %}
 	Room Temperature: {{ temperature }}°{{ unit[0]|upper }} <br>
@@ -73,11 +73,11 @@
 --!>
       
       <div class="refresh">
-	🔄 <a href="/">Refresh Data</a>
+	<a href="/">Refresh Data</a>
       </div>
 
       <div class="device-statuses">
-	<h2>Device Statuses</h2>
+	<h2>Device Status</h2>
 	{% if device_statuses %}
 	<ul>
 	  {% for device, status in device_statuses.items() %}
